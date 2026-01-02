@@ -50,36 +50,45 @@ Route::prefix('admin')
 // User
 Route::middleware(['auth', 'level: 0'])
     ->group(function () {
-        Route::get("/", [SessionController::class, 'index'])->name('member.dashboard');
+        Route::get("/", [SessionController::class, 'index'])
+            ->name('member.dashboard');
 
-        Route::get("/404", function () {
-            return view('frontend.errors.404');
-        });
-        Route::get("/account", function () {
-            return view('frontend.members.account');
-        });
+        // Account
+        Route::get("/account", [SessionController::class, 'edit']);
+        Route::patch("/account/{id}", [SessionController::class, 'update']);
 
+        // Blog
         Route::get("/blog", function () {
             return view('frontend.blogs.blog');
         });
+
+        // Cart
         Route::get("/cart", function () {
             return view('frontend.carts.cart');
         });
         Route::get("/checkout", function () {
             return view('frontend.carts.checkout');
         });
+
+        // Contact
         Route::get("/contact-us", function () {
             return view('frontend.contacts.contact-us');
         });
+
+        // Product
         Route::get("/shop", function () {
             return view('frontend.products.shop');
         });
-
         Route::get("/my-product", function () {
             return view('frontend.products.my-product');
         });
         Route::get("/add-product", function () {
             return view('frontend.products.add-product');
+        });
+
+        // Error
+        Route::get("/404", function () {
+            return view('frontend.errors.404');
         });
     });
 

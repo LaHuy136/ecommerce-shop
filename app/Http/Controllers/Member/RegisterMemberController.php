@@ -3,23 +3,20 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Member\MemberRegisterRequest;
-use App\Http\Requests\Member\MemberLoginRequest;
+use App\Http\Requests\Member\RegisterMemberRequest;
 use App\Models\Country;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class RegisterMemberController extends Controller
 {
     public function create()
     {
-        // dd(Country::get());
         return view('frontend.members.register', [
             'countries' => Country::get()
         ]);
     }
 
-    public function register(MemberRegisterRequest $request)
+    public function register(RegisterMemberRequest $request)
     {
         $data = $request->validated();
         $data['level'] = 0;
