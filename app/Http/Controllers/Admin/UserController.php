@@ -59,8 +59,7 @@ class UserController extends Controller
      */
     public function update(UpdateProfileRequest $request)
     {
-        $user = User::findOrFail(Auth::user()->getAttribute('id'));
-
+        $user = Auth::user();
         $data = $request->validated();
 
         if ($request->hasFile('avatar')) {
