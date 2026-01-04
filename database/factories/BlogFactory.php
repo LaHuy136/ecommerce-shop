@@ -18,10 +18,12 @@ class BlogFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->unique()->paragraph(1),
-            'image' => fake()->imageUrl(),
+            'title' => fake()->unique()->sentence(4),
+            'slug' => fake()->unique()->slug(3),
+            'image' => 'https://picsum.photos/320/240?random=' . rand(1, 999),
             'description' => fake()->paragraph(),
             'content' => fake()->paragraph(5),
+            'user_id' => User::inRandomOrder()->first()->id
         ];
     }
 }

@@ -18,16 +18,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Country::factory(10)->create();
+        $countries = Country::factory(10)->create();
 
-        Blog::factory(10)->create();
+        $admin = User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('password'),
+            'level' => 1,
+            'country_id' => $countries->random()->id,
+        ]);
 
+        User::factory(10)->create([
+            'level' => 0
+        ]);
 
-        User::factory()
-            ->create([
-                'name' => 'admin',
-                'email' => 'admin@example.com',
-                'password' => Hash::make('password')
-            ]);
+        Blog::factory(10)->create([
+            'user_id' => $admin->id
+        ]);
     }
 }

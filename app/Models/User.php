@@ -44,6 +44,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function isAdmin()
+    {
+        return $this->level === 1;
+    }
+
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);

@@ -5,29 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Str;
 
-class Blog extends Model
+class Rate extends Model
 {
-    /** @use HasFactory<\Database\Factories\BlogFactory> */
+    /** @use HasFactory<\Database\Factories\RateFactory> */
     use HasFactory;
 
     protected $guarded = [];
 
-    protected static function booted()
+    public function blog(): BelongsTo
     {
-        static::creating(function ($blog) {
-            $blog->slug = Str::slug($blog->title);
-        });
+        return $this->belongsTo(Blog::class);
     }
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function rates()
-    {
-        return $this->hasMany(Rate::class);
     }
 }
