@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Member\BlogController as MemberBlogController;
+use App\Http\Controllers\Member\RateController;
 use App\Http\Controllers\Member\RegisterMemberController;
 use App\Http\Controllers\Member\SessionController;
 use Illuminate\Support\Facades\Route;
@@ -39,12 +41,12 @@ Route::prefix('admin')
         Route::delete('/country/{country}', [CountryController::class, 'destroy']);
 
         // Blog
-        Route::get('/blog', [BlogController::class, 'index'])->name('admin.blogs.index');
-        Route::get('/blog/create', [BlogController::class, 'create']);
-        Route::post('/blog', [BlogController::class, 'store']);
-        Route::get('/blog/{blog}/edit', [BlogController::class, 'edit']);
-        Route::patch('/blog/{blog}', [BlogController::class, 'update']);
-        Route::delete('/blog/{blog}', [BlogController::class, 'destroy']);
+        Route::get('/blog', [AdminBlogController::class, 'index'])->name('admin.blogs.index');
+        Route::get('/blog/create', [AdminBlogController::class, 'create']);
+        Route::post('/blog', [AdminBlogController::class, 'store']);
+        Route::get('/blog/{blog}/edit', [AdminBlogController::class, 'edit']);
+        Route::patch('/blog/{blog}', [AdminBlogController::class, 'update']);
+        Route::delete('/blog/{blog}', [AdminBlogController::class, 'destroy']);
     });
 
 // User
@@ -57,10 +59,9 @@ Route::middleware(['auth', 'level: 0'])
         Route::get("/account", [SessionController::class, 'edit']);
         Route::patch("/account/{id}", [SessionController::class, 'update']);
 
-        // Blog
-        Route::get("/blog", function () {
-            return view('frontend.blogs.blog');
-        });
+        // Rating blog
+        Route::post('/rate', [RateController::class, 'store'])
+            ->name('rate.store');
 
         // Cart
         Route::get("/cart", function () {
@@ -94,11 +95,17 @@ Route::middleware(['auth', 'level: 0'])
 
 Route::middleware('guest')
     ->group(function () {
-        Route::get('/login', [SessionController::class, 'create'])->name('login');
+        Route::get('/login', [SessionController::class, 'create'])
+            ->name('login');
         Route::post('/login', [SessionController::class, 'login']);
 
         Route::get('/register', [RegisterMemberController::class, 'create']);
         Route::post('/register', [RegisterMemberController::class, 'register']);
+
+        // Blog
+        Route::get("/blog", [MemberBlogController::class, 'index']);
+        Route::get("/blog/{blog:slug}", [MemberBlogController::class, 'show'])
+            ->name('blogs.show');
     });
 
 Route::post('/logout', [SessionController::class, 'logout'])
