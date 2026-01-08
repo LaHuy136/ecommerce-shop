@@ -76,6 +76,7 @@ Route::middleware(['auth', 'level: 0'])
             ->name('cart.index');
         Route::post("/cart", [CartController::class, 'store'])
             ->name('cart.store');
+        Route::post("/cart/{cart}", [CartController::class, 'update']);
 
 
         Route::get("/checkout", function () {

@@ -15,9 +15,16 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
 
-        return view('frontend.carts.cart', compact(
-            'cart'
-        ));
+        $total    = array_sum(
+            array_map(
+                fn($i) => $i['price'] * $i['quantity'],
+                $cart
+            )
+        );
+        return view('frontend.carts.cart', [
+            'cart' => $cart,
+            'total' => '$' . $total
+        ]);
     }
 
     /**
@@ -94,7 +101,57 @@ class CartController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $action = $request->action;
+        $message = 'Cart updated successfully';
+        $cart = session()->get('cart', []);
+
+        if (!isset($cart[$id])) {
+            return response()->json([
+                'message' => 'Product not found in cart'
+            ]);
+        }
+
+        if ($action === 'increment') {
+            $cart[$id]['quantity']++;
+        }
+
+        if ($action === 'decrement') {
+            if ($cart[$id]['quantity'] > 1) {
+                $cart[$id]['quantity']--;
+            } else {
+                $message = 'Quantity cannot be less than 1';
+            }
+        }
+
+        if ($action === 'delete') {
+            unset($cart[$id]);
+        }
+
+        session()->put('cart', $cart);
+
+        $itemQty   = $cart[$id]['quantity'] ?? 0;
+        $itemTotal = ($cart[$id]['price'] ?? 0) * $itemQty;
+
+        $totalQty = array_sum(
+            array_column(
+                $cart,
+                'quantity'
+            )
+        );
+        $total    = array_sum(
+            array_map(
+                fn($i) => $i['price'] * $i['quantity'],
+                $cart
+            )
+        );
+
+        return response()->json([
+            'message' => $message,
+            'itemQty'   => $itemQty,
+            'itemTotal' => '$' . $itemTotal,
+            'totalQty'  => $totalQty,
+            'total'     => '$' . $total,
+        ]);
     }
 
     /**
