@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Member\BlogController as MemberBlogController;
 use App\Http\Controllers\Member\CartController;
+use App\Http\Controllers\Member\CheckoutController;
 use App\Http\Controllers\Member\CommentController;
 use App\Http\Controllers\Member\ProductController;
 use App\Http\Controllers\Member\RateController;
@@ -79,9 +80,7 @@ Route::middleware(['auth', 'level: 0'])
         Route::post("/cart/{cart}", [CartController::class, 'update']);
 
 
-        Route::get("/checkout", function () {
-            return view('frontend.carts.checkout');
-        });
+        Route::get("/checkout", [CheckoutController::class, 'index']);
 
         // Contact
         Route::get("/contact-us", function () {
