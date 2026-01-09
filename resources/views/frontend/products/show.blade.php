@@ -40,33 +40,56 @@
 
             <!--product-information-->
             <div class="col-sm-7">
-                <div class="product-information">
-                    {{-- <img src="https://picsum.photos/20" class="newarrival" alt="" /> --}}
-
+                <div class="product-information product-image-wrapper" data-id="{{ $product->id }}">
+                    {{-- Product Name --}}
                     <h2>{{ $product->name }}</h2>
 
-                    <img src="{{ asset('frontend/images/product-details/rating.png') }}" alt="" />
+                    {{-- Rating & Price --}}
+                    {{-- <div class="row items-center"> --}}
+                    {{-- <img src="{{ asset('frontend/images/product-details/rating.png') }}" alt="Rating"> --}}
 
                     <span>
-                        <span>US ${{ $product->price }}</span>
-                        <label>Quantity:</label>
-                        <input type="text" value="3" />
-                        <button type="button" class="btn btn-fefault cart">
+                        <span class="price">
+                            US ${{ $product->price }}
+                        </span>
+
+                        {{-- Add to Cart --}}
+                        <button type="button" class="btn btn-default add-to-cart">
                             <i class="fa fa-shopping-cart"></i>
                             Add to cart
                         </button>
                     </span>
-                    <p><b>Status:</b> {{ ucfirst($product->status) }}</p>
+                    {{-- </div> --}}
 
-                    <p><b>Condition:</b> {{ ucfirst($product->condition) }}
-                        @if ($product->condition == 'sale')
-                            <span>{{ $product->sale_percent }}%</span>
+                    {{-- Status --}}
+                    <p>
+                        <b>Status:</b>
+                        {{ ucfirst($product->status) }}
+                    </p>
+
+                    {{-- Condition --}}
+                    <p>
+                        <b>Condition:</b>
+                        {{ ucfirst($product->condition) }}
+
+                        @if ($product->condition === 'sale')
+                            <span class="sale-percent">
+                                {{ $product->sale_percent }}%
+                            </span>
                         @endif
                     </p>
 
-                    <p><b>Brand:</b> {{ $product->brand->name }}</p>
-                    {{-- <a href=""><img src="images/product-details/share.png"
-                                        class="share img-responsive" alt="" /></a> --}}
+                    {{-- Brand --}}
+                    <p>
+                        <b>Brand:</b>
+                        {{ $product->brand->name }}
+                    </p>
+
+                    {{-- Share --}}
+                    <a href="#">
+                        <img src="{{ asset('frontend/images/product-details/share.png') }}" class="share img-responsive"
+                            alt="Share">
+                    </a>
                 </div>
             </div>
             <!--/product-information-->
