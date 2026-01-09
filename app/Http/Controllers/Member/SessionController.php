@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Member\LoginMemberRequest;
 use App\Http\Requests\Member\UpdateMemberRequest;
 use App\Models\Country;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -15,7 +16,10 @@ class SessionController extends Controller
 {
     public function index()
     {
-        return view('frontend.index');
+        return view('frontend.index', [
+            'products' => Product::latest()
+                ->paginate(6)
+        ]);
     }
 
     public function create()

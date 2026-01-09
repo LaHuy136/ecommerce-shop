@@ -60,6 +60,21 @@
                 <div class="col-md-8 clearfix">
                     <div class="shop-menu clearfix pull-right">
                         <ul class="nav navbar-nav">
+                            <li>
+                                <a href="{{ url('/checkout') }}">
+                                    <i class="fa fa-crosshairs"></i> Checkout
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('cart.index') }}" class="nav-link position-relative">
+                                    <i class="fa fa-shopping-cart"></i> Cart
+
+                                    <span id="cartQty" class="badge">
+                                        {{ $cartQty }}
+                                    </span>
+                                </a>
+                            </li>
                             @auth
                                 <li>
                                     <a href="{{ url('/account') }}">
@@ -72,23 +87,6 @@
                                         <i class="fa fa-star"></i> Wishlist
                                     </a>
                                 </li> --}}
-
-                                <li>
-                                    <a href="{{ url('/checkout') }}">
-                                        <i class="fa fa-crosshairs"></i> Checkout
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="{{ route('cart.index') }}" class="nav-link position-relative">
-                                        <i class="fa fa-shopping-cart"></i> Cart
-
-                                        <span id="cartQty" class="badge">
-                                            {{ $cartQty }}
-                                        </span>
-                                    </a>
-                                </li>
-
 
                                 <li>
                                     <a href="{{ route('logout') }}"

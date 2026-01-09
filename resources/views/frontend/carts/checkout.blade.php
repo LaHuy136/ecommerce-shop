@@ -56,14 +56,16 @@
 
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="password" name="password" class="form-control form-control-line">
+                                <input type="password" name="password" placeholder="********"
+                                    class="form-control form-control-line">
 
                             </div>
 
                             <div class="form-group">
                                 <label for="password_confirmation">Confirmation Password</label>
 
-                                <input type="password" name="password_confirmation" class="form-control form-control-line">
+                                <input type="password" name="password_confirmation" placeholder="********"
+                                    class="form-control form-control-line">
 
                             </div>
 
@@ -88,56 +90,58 @@
                     </div>
                 </div>
             </div>
-            <div class="review-payment">
-                <h2>Review & Payment</h2>
-            </div>
 
-            <div class="table-responsive cart_info">
-                <table class="table table-condensed">
-                    <thead>
-                        <tr class="cart_menu">
-                            <td class="image">Item</td>
-                            <td class="description"></td>
-                            <td class="price">Price</td>
-                            <td class="quantity">Quantity</td>
-                            <td class="total">Total</td>
-                            <td></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($cart as $item)
-                            <tr data-cart-id="{{ $item['id'] }}">
-                                <td class="cart_product">
-                                    <a href=""><img src="{{ asset('storage/products/85x84/' . $item['image']) }}"
-                                            alt="Product Image..."></a>
-                                </td>
-                                <td class="cart_description">
-                                    <h4><a href="">{{ $item['name'] }}</a></h4>
-                                </td>
-                                <td class="cart_price">
-                                    <p>${{ $item['price'] }}</p>
-                                </td>
-                                <td class="cart_quantity">
-                                    <div class="cart_quantity_button">
-                                        <a class="cart_quantity_up"> + </a>
-                                        <input class="cart_quantity_input" type="text" name="quantity"
-                                            value="{{ $item['quantity'] }}" autocomplete="off" size="2">
-                                        <a class="cart_quantity_down"> - </a>
-                                    </div>
-                                </td>
-                                <td class="cart_total">
-                                    <p class="cart_total_price">${{ $item['price'] * $item['quantity'] }}</p>
-                                </td>
-                                <td class="cart_delete">
-                                    <a class="cart_quantity_delete"><i class="fa fa-times"></i></a>
-                                </td>
+            @if (!empty($cart))
+                <div class="review-payment">
+                    <h2>Review & Payment</h2>
+                </div>
+
+                <div class="table-responsive cart_info">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr class="cart_menu">
+                                <td class="image">Item</td>
+                                <td class="description"></td>
+                                <td class="price">Price</td>
+                                <td class="quantity">Quantity</td>
+                                <td class="total">Total</td>
+                                <td></td>
                             </tr>
-                        @endforeach
-                        <tr>
-                            <td colspan="4">&nbsp;</td>
-                            <td colspan="2">
-                                <table class="table table-condensed total-result">
-                                    {{-- <tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($cart as $item)
+                                <tr data-cart-id="{{ $item['id'] }}">
+                                    <td class="cart_product">
+                                        <a href=""><img src="{{ asset('storage/products/85x84/' . $item['image']) }}"
+                                                alt="Product Image..."></a>
+                                    </td>
+                                    <td class="cart_description">
+                                        <h4><a href="">{{ $item['name'] }}</a></h4>
+                                    </td>
+                                    <td class="cart_price">
+                                        <p>${{ $item['price'] }}</p>
+                                    </td>
+                                    <td class="cart_quantity">
+                                        <div class="cart_quantity_button">
+                                            <a class="cart_quantity_up"> + </a>
+                                            <input class="cart_quantity_input" type="text" name="quantity"
+                                                value="{{ $item['quantity'] }}" autocomplete="off" size="2">
+                                            <a class="cart_quantity_down"> - </a>
+                                        </div>
+                                    </td>
+                                    <td class="cart_total">
+                                        <p class="cart_total_price">${{ $item['price'] * $item['quantity'] }}</p>
+                                    </td>
+                                    <td class="cart_delete">
+                                        <a class="cart_quantity_delete"><i class="fa fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            <tr>
+                                <td colspan="4">&nbsp;</td>
+                                <td colspan="2">
+                                    <table class="table table-condensed total-result">
+                                        {{-- <tr>
                                         <td>Cart Sub Total</td>
                                         <td>$59</td>
                                     </tr>
@@ -145,26 +149,28 @@
                                         <td>Exo Tax</td>
                                         <td>$2</td>
                                     </tr> --}}
-                                    <tr class="shipping-cost">
-                                        <td>Shipping Cost</td>
-                                        <td>Free</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total</td>
-                                        <td><span id="total">{{ $total }}</span></td>
-                                    </tr>
+                                        <tr class="shipping-cost">
+                                            <td>Shipping Cost</td>
+                                            <td>Free</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total</td>
+                                            <td><span id="total">{{ $total }}</span></td>
+                                        </tr>
 
-                                    <tr>
-                                        <td>
-                                            <button class="btn btn-default">Order</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                                        <tr>
+                                            <td>
+                                                <button class="btn btn-default" id="btnOrder">Order</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            @endif
+
 
             {{-- Payment options --}}
             {{-- <div class="payment-options">
@@ -183,6 +189,15 @@
 
     <script>
         const cbRegister = document.getElementById('register');
+        const btnOrder = document.getElementById('btnOrder');
+
+        btnOrder.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            if (!window.isLoggedIn) {
+                alert('Please register if you haven\'t account & login to order');
+            }
+        })
 
         function toggeleShooperInformation() {
             const shopperInformation = document.querySelector('.shopper-informations');

@@ -56,8 +56,6 @@ Route::prefix('admin')
 // User
 Route::middleware(['auth', 'level: 0'])
     ->group(function () {
-        Route::get("/", [SessionController::class, 'index'])
-            ->name('member.dashboard');
 
         // Account
         Route::get("/account", [SessionController::class, 'edit'])
@@ -72,30 +70,12 @@ Route::middleware(['auth', 'level: 0'])
         Route::post('/comments', [CommentController::class, 'store'])
             ->name('comments.store');
 
-        // Cart
-        Route::get('/cart', [CartController::class, 'index'])
-            ->name('cart.index');
-        Route::post("/cart", [CartController::class, 'store'])
-            ->name('cart.store');
-        Route::post("/cart/{cart}", [CartController::class, 'update']);
-
-
-        Route::get("/checkout", [CheckoutController::class, 'index']);
-
-        // Contact
-        Route::get("/contact-us", function () {
-            return view('frontend.contacts.contact-us');
-        });
-
-
         // Product
-        Route::get("/product/home", [ProductController::class, 'home'])
-            ->name('products.home');
         Route::get("/product", [ProductController::class, 'index'])
             ->name('products.index');
         Route::get("/product/create", [ProductController::class, 'create']);
         Route::post("/product", [ProductController::class, 'store']);
-        Route::get("/product/{product}", [ProductController::class, 'show']);
+
         Route::get("/product/{product}/edit", [ProductController::class, 'edit']);
         Route::patch("/product/{product}", [ProductController::class, 'update']);
         Route::delete("/product/{product}", [ProductController::class, 'destroy']);
@@ -116,15 +96,39 @@ Route::middleware('guest')
         Route::post('/register', [RegisterMemberController::class, 'register']);
     });
 
+Route::get("/", [SessionController::class, 'index'])
+    ->name('member.dashboard');
+
 // Blog
 Route::get("/blog", [MemberBlogController::class, 'index']);
 Route::get('/blog/{blog}/comments', [CommentController::class, 'index']);
 Route::get("/blog/{blog:slug}", [MemberBlogController::class, 'show'])
     ->name('blogs.show');
 
+// Product
+Route::get("/product/home", [ProductController::class, 'home'])
+    ->name('products.home');
+Route::get("/product/{product}", [ProductController::class, 'show']);
+
+// Cart
+Route::get('/cart', [CartController::class, 'index'])
+    ->name('cart.index');
+Route::post("/cart", [CartController::class, 'store'])
+    ->name('cart.store');
+Route::post("/cart/{cart}", [CartController::class, 'update']);
+
+// Checkout
+Route::get("/checkout", [CheckoutController::class, 'index']);
+
+// Contact
+Route::get("/contact-us", function () {
+    return view('frontend.contacts.contact-us');
+});
+
 Route::post('/logout', [SessionController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
+
 
 
 // Auth

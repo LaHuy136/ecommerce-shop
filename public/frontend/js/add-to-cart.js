@@ -4,11 +4,6 @@ $(document).ready(function () {
     btnAddToCart.on("click", function (e) {
         e.preventDefault();
 
-        if (!window.isLoggedIn) {
-            alert("Please login to rate post");
-            return;
-        }
-
         const productId = $(this).closest(".product-image-wrapper").data("id");
 
         $.ajax({

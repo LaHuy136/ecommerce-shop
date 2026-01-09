@@ -45,7 +45,7 @@
                     {{-- Content --}}
                     <p>{{ $blog->content }}</p>
 
-                    <a class="btn btn-primary" href="/blog/{{ $blog->id }}">Read More</a>
+                    <a class="btn btn-primary" href="/blog/{{ $blog->slug }}">Read More</a>
                 </div>
             @endforeach
 
