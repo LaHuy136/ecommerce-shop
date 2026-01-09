@@ -10,91 +10,74 @@
                 </ol>
             </div><!--/breadcrums-->
 
-            <div class="step-one">
-                <h2 class="heading">Step1</h2>
-            </div>
-            <div class="checkout-options">
-                <h3>New User</h3>
-                <p>Checkout options</p>
-                <ul class="nav">
-                    <li>
-                        <label><input type="checkbox"> Register Account</label>
-                    </li>
-                    <li>
-                        <label><input type="checkbox"> Guest Checkout</label>
-                    </li>
-                    <li>
-                        <a href=""><i class="fa fa-times"></i>Cancel</a>
-                    </li>
-                </ul>
-            </div><!--/checkout-options-->
+            @auth
+            @else
+                <div class="step-one">
+                    <h2 class="heading">Checkout options</h2>
+                </div>
+                <div class="checkout-options"> <!-- checkout options -->
+                    {{-- <h3>New User</h3> --}}
+                    {{-- <p>Checkout options</p> --}}
+                    <ul class="nav">
+                        <li>
+                            <label for="register">
+                                <input type="checkbox" value="register" name="register" id="register"
+                                    onclick="toggeleShooperInformation()"> Register Account
+                            </label>
+                        </li>
+                    </ul>
+                </div><!--/checkout-options-->
+                <div class="register-req">
+                    <p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Member
+                    </p>
+                </div><!--/register-req-->
+            @endauth
 
-            <div class="register-req">
-                <p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
-            </div><!--/register-req-->
 
-            <div class="shopper-informations">
+            <div class="shopper-informations" style="display: none">
                 <div class="row">
-                    <div class="col-sm-3">
-                        <div class="shopper-info">
-                            <p>Shopper Information</p>
-                            <form>
-                                <input type="text" placeholder="Display Name">
-                                <input type="text" placeholder="User Name">
-                                <input type="password" placeholder="Password">
-                                <input type="password" placeholder="Confirm password">
-                            </form>
-                            <a class="btn btn-primary" href="">Get Quotes</a>
-                            <a class="btn btn-primary" href="">Continue</a>
-                        </div>
-                    </div>
-                    <div class="col-sm-5 clearfix">
-                        <div class="bill-to">
-                            <p>Bill To</p>
-                            <div class="form-one">
-                                <form>
-                                    <input type="text" placeholder="Company Name">
-                                    <input type="text" placeholder="Email*">
-                                    <input type="text" placeholder="Title">
-                                    <input type="text" placeholder="First Name *">
-                                    <input type="text" placeholder="Middle Name">
-                                    <input type="text" placeholder="Last Name *">
-                                    <input type="text" placeholder="Address 1 *">
-                                    <input type="text" placeholder="Address 2">
-                                </form>
+                    <div class="col-sm-8 signup-form">
+                        <form action="/register" method="POST" enctype="multipart/form-data">
+                            @csrf
+
+                            <div pss="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" placeholder="Johnathan Doe" name="name"
+                                    class="form-control form-control-line">
+
                             </div>
-                            <div class="form-two">
-                                <form>
-                                    <input type="text" placeholder="Zip / Postal Code *">
-                                    <select>
-                                        <option>-- Country --</option>
-                                        <option>United States</option>
-                                        <option>Bangladesh</option>
-                                        <option>UK</option>
-                                        <option>India</option>
-                                        <option>Pakistan</option>
-                                        <option>Ucrane</option>
-                                        <option>Canada</option>
-                                        <option>Dubai</option>
-                                    </select>
-                                    <select>
-                                        <option>-- State / Province / Region --</option>
-                                        <option>United States</option>
-                                        <option>Bangladesh</option>
-                                        <option>UK</option>
-                                        <option>India</option>
-                                        <option>Pakistan</option>
-                                        <option>Ucrane</option>
-                                        <option>Canada</option>
-                                        <option>Dubai</option>
-                                    </select>
-                                    <input type="password" placeholder="Confirm password">
-                                    <input type="text" placeholder="Phone *">
-                                    <input type="text" placeholder="Mobile Phone">
-                                    <input type="text" placeholder="Fax">
-                                </form>
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" placeholder="johnathan@admin.com"
+                                    class="form-control form-control-line" name="email" id="email">
+
                             </div>
-                        </div>
+
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" name="password" class="form-control form-control-line">
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password_confirmation">Confirmation Password</label>
+
+                                <input type="password" name="password_confirmation" class="form-control form-control-line">
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone No</label>
+                                <input type="text" name="phone" placeholder="+84 363203112"
+                                    class="form-control form-control-line">
+
+                            </div>
+
+                            <div class="form-group">
+                                <button class="btn btn-default" type="submit">Register</button>
+                            </div>
+                        </form>
                     </div>
                     <div class="col-sm-4">
                         <div class="order-message">
@@ -122,104 +105,59 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="cart_product">
-                                <a href=""><img src="images/cart/one.png" alt=""></a>
-                            </td>
-                            <td class="cart_description">
-                                <h4><a href="">Colorblock Scuba</a></h4>
-                                <p>Web ID: 1089772</p>
-                            </td>
-                            <td class="cart_price">
-                                <p>$59</p>
-                            </td>
-                            <td class="cart_quantity">
-                                <div class="cart_quantity_button">
-                                    <a class="cart_quantity_up" href=""> + </a>
-                                    <input class="cart_quantity_input" type="text" name="quantity" value="1"
-                                        autocomplete="off" size="2">
-                                    <a class="cart_quantity_down" href=""> - </a>
-                                </div>
-                            </td>
-                            <td class="cart_total">
-                                <p class="cart_total_price">$59</p>
-                            </td>
-                            <td class="cart_delete">
-                                <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="cart_product">
-                                <a href=""><img src="images/cart/two.png" alt=""></a>
-                            </td>
-                            <td class="cart_description">
-                                <h4><a href="">Colorblock Scuba</a></h4>
-                                <p>Web ID: 1089772</p>
-                            </td>
-                            <td class="cart_price">
-                                <p>$59</p>
-                            </td>
-                            <td class="cart_quantity">
-                                <div class="cart_quantity_button">
-                                    <a class="cart_quantity_up" href=""> + </a>
-                                    <input class="cart_quantity_input" type="text" name="quantity" value="1"
-                                        autocomplete="off" size="2">
-                                    <a class="cart_quantity_down" href=""> - </a>
-                                </div>
-                            </td>
-                            <td class="cart_total">
-                                <p class="cart_total_price">$59</p>
-                            </td>
-                            <td class="cart_delete">
-                                <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="cart_product">
-                                <a href=""><img src="images/cart/three.png" alt=""></a>
-                            </td>
-                            <td class="cart_description">
-                                <h4><a href="">Colorblock Scuba</a></h4>
-                                <p>Web ID: 1089772</p>
-                            </td>
-                            <td class="cart_price">
-                                <p>$59</p>
-                            </td>
-                            <td class="cart_quantity">
-                                <div class="cart_quantity_button">
-                                    <a class="cart_quantity_up" href=""> + </a>
-                                    <input class="cart_quantity_input" type="text" name="quantity" value="1"
-                                        autocomplete="off" size="2">
-                                    <a class="cart_quantity_down" href=""> - </a>
-                                </div>
-                            </td>
-                            <td class="cart_total">
-                                <p class="cart_total_price">$59</p>
-                            </td>
-                            <td class="cart_delete">
-                                <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                            </td>
-                        </tr>
+                        @foreach ($cart as $item)
+                            <tr data-cart-id="{{ $item['id'] }}">
+                                <td class="cart_product">
+                                    <a href=""><img src="{{ asset('storage/products/85x84/' . $item['image']) }}"
+                                            alt="Product Image..."></a>
+                                </td>
+                                <td class="cart_description">
+                                    <h4><a href="">{{ $item['name'] }}</a></h4>
+                                </td>
+                                <td class="cart_price">
+                                    <p>${{ $item['price'] }}</p>
+                                </td>
+                                <td class="cart_quantity">
+                                    <div class="cart_quantity_button">
+                                        <a class="cart_quantity_up"> + </a>
+                                        <input class="cart_quantity_input" type="text" name="quantity"
+                                            value="{{ $item['quantity'] }}" autocomplete="off" size="2">
+                                        <a class="cart_quantity_down"> - </a>
+                                    </div>
+                                </td>
+                                <td class="cart_total">
+                                    <p class="cart_total_price">${{ $item['price'] * $item['quantity'] }}</p>
+                                </td>
+                                <td class="cart_delete">
+                                    <a class="cart_quantity_delete"><i class="fa fa-times"></i></a>
+                                </td>
+                            </tr>
+                        @endforeach
                         <tr>
                             <td colspan="4">&nbsp;</td>
                             <td colspan="2">
                                 <table class="table table-condensed total-result">
-                                    <tr>
+                                    {{-- <tr>
                                         <td>Cart Sub Total</td>
                                         <td>$59</td>
                                     </tr>
                                     <tr>
                                         <td>Exo Tax</td>
                                         <td>$2</td>
-                                    </tr>
+                                    </tr> --}}
                                     <tr class="shipping-cost">
                                         <td>Shipping Cost</td>
                                         <td>Free</td>
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td><span>$61</span></td>
+                                        <td><span id="total">{{ $total }}</span></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <button class="btn btn-default">Order</button>
+                                        </td>
                                     </tr>
                                 </table>
                             </td>
@@ -227,7 +165,9 @@
                     </tbody>
                 </table>
             </div>
-            <div class="payment-options">
+
+            {{-- Payment options --}}
+            {{-- <div class="payment-options">
                 <span>
                     <label><input type="checkbox"> Direct Bank Transfer</label>
                 </span>
@@ -237,7 +177,23 @@
                 <span>
                     <label><input type="checkbox"> Paypal</label>
                 </span>
-            </div>
+            </div> --}}
         </div>
     </section> <!--/#cart_items-->
+
+    <script>
+        const cbRegister = document.getElementById('register');
+
+        function toggeleShooperInformation() {
+            const shopperInformation = document.querySelector('.shopper-informations');
+
+            if (cbRegister.checked) {
+                shopperInformation.style.display = 'block';
+            } else {
+                shopperInformation.style.display = 'none';
+            }
+        }
+    </script>
+    <script src="{{ asset('frontend/js/jquery-1.9.1.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/handle-cart.js') }}"></script>
 @endsection
