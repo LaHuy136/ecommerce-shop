@@ -30,6 +30,8 @@
                 </tbody>
             </table>
         </div>
+        <div style="padding-left: 15px">
+            {{ $histories->links('pagination::bootstrap-4') }}
+        </div>
     </div>
-    {{-- {{ $histories->links() }} --}}
 @endsection
