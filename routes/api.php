@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Admin\HistoryController;
 use App\Http\Controllers\Api\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Api\Admin\ProfileController;
 use App\Http\Controllers\Api\Admin\UserController;
+use App\Http\Controllers\Api\CountryController as ApiCountryController;
 use App\Http\Controllers\Api\Member\BlogController as MemberBlogController;
 use App\Http\Controllers\Api\Member\CommentController;
 use App\Http\Controllers\Api\Member\ProductController as MemberProductController;
@@ -92,6 +93,13 @@ Route::prefix('blogs')->group(function () {
     Route::get('/{blog}/comments', [CommentController::class, 'index']);
     Route::get("/{id}", [MemberBlogController::class, 'show']);
 });
+
+//Countries
+Route::get("/countries", [ApiCountryController::class, 'index']);
+
+// Products
+Route::get("/home", [MemberProductController::class, 'home']);
+Route::get("/shop", [MemberProductController::class, 'shop']);
 
 // Register & Login
 Route::post('/login', [SessionController::class, 'login']);

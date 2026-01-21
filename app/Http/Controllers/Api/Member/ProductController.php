@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\Member;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Member\StoreProductRequest;
 use App\Http\Requests\Member\UpdateProductRequest;
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,6 +65,38 @@ class ProductController extends Controller
             'data' =>  Product::orderBy('id', 'asc')
                 ->whereIn('user_id', [Auth::user()->id])
                 ->paginate(5)
+        ], 200);
+    }
+
+    public function home()
+    {
+        return response()->json([
+            'status' => 200,
+            'featuredProducts' => Product::with(['category', 'brand', 'images'])
+                ->latest()
+                ->orderBy('created_at', 'desc')
+                ->paginate(6),
+            'recommendProducts' => Product::with(['category', 'brand', 'images'])
+                ->latest('created_at')
+                ->take(3)
+                ->get(),
+            'categories' => Category::all(),
+            'brands' => Brand::withCount('products')
+                ->get('name')
+        ], 200);
+    }
+
+    public function shop()
+    {
+        return response()->json([
+            'status' => 200,
+            'products' => Product::with(['category', 'brand', 'images'])
+                ->latest()
+                ->orderBy('created_at', 'desc')
+                ->paginate(12),
+            'categories' => Category::all(),
+            'brands' => Brand::withCount('products')
+                ->get('name')
         ], 200);
     }
 

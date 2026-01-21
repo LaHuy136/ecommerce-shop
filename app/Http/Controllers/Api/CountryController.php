@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\Member;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Blog;
+use App\Models\Country;
 use Illuminate\Http\Request;
 
-class BlogController extends Controller
+class CountryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +15,7 @@ class BlogController extends Controller
     {
         return response()->json([
             'status' => 200,
-            'blogs' => Blog::with('user')
-                ->withAvg('rates', 'rating')
-                ->withCount('rates')
-                ->latest()
-                ->paginate(3)
+            'data' => Country::all()
         ], 200);
     }
 
@@ -44,28 +40,7 @@ class BlogController extends Controller
      */
     public function show(string $id)
     {
-        $blog = Blog::findOrFail($id);
-
-        $data = $blog
-            ->load('user')
-            ->loadAvg('rates', 'rating')
-            ->loadCount('rates')
-            ->loadCount('comments');
-
-        $previousBlog = Blog::where('id', '<', $blog->id, false)
-            ->orderBy('id', 'desc')
-            ->first();
-
-        $nextBlog = Blog::where('id', '>', $blog->id, false)
-            ->orderBy('id', 'asc')
-            ->first();
-
-        return response()->json([
-            'status' => 200,
-            'blog' => $data,
-            'previousBlog' => $previousBlog,
-            'nextBlog' => $nextBlog
-        ], 200);
+        //
     }
 
     /**

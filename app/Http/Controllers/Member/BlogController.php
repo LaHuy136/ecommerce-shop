@@ -49,11 +49,11 @@ class BlogController extends Controller
             ->loadCount('comments');
 
 
-        $previousBlog = Blog::where('id', '<', $blog->id)
+        $previousBlog = Blog::where('id', '<', $blog->id, false)
             ->orderBy('id', 'desc')
             ->first();
 
-        $nextBlog = Blog::where('id', '>', $blog->id)
+        $nextBlog = Blog::where('id', '>', $blog->id, false)
             ->orderBy('id', 'asc')
             ->first();
 
