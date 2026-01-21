@@ -29,11 +29,12 @@ class SessionController extends Controller
                 ->store('avatars/members', 'public');
         }
 
-        User::create($data);
+        $user = User::create($data);
 
         return response()->json([
             'status' => 'sucess',
             'message' => 'Register successfully',
+            'user' => $user
         ], 200);
     }
 

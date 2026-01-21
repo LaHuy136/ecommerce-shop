@@ -14,7 +14,7 @@
                 <form action="/register" method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    <div pss="form-group">
+                    <div class="form-group">
                         <label for="name">Full Name</label>
                         <input type="text" placeholder="Johnathan Doe" name="name"
                             class="form-control form-control-line">
